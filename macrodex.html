@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MACRODEX – IT Solutions Pvt. Ltd.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #0050C8;
+      --primary-light: #1E6EFF;
+      --primary-glow: rgba(0,80,200,0.25);
+      --accent: #00C8FF;
+      --accent2: #FF6B35;
+      --dark: #06090F;
+      --dark2: #0C1120;
+      --dark3: #111827;
+      --dark4: #1A2234;
+      --text: #E2E8F4;
+      --text-muted: #6B7A99;
+      --text-dim: #3A4560;
+      --border: rgba(255,255,255,0.06);
+      --border2: rgba(0,80,200,0.25);
+      --green: #00E087;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ======= LOGO SVG ======= */
+    .logo-svg { width: 160px; height: 36px; }
+
+    /* ======= TOP BAR ======= */
+    .topbar {
+      background: var(--dark2);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .topbar a { color: var(--text-muted); text-decoration: none; margin-left: 20px; }
+    .topbar a:hover { color: var(--accent); }
+    .topbar-left { display: flex; gap: 20px; }
+    .topbar-left span { display: flex; align-items: center; gap: 6px; }
+    .topbar-left svg { width: 13px; height: 13px; stroke: var(--accent); stroke-width: 1.8; fill: none; }
+
+    /* ======= NAV ======= */
+    nav {
+      position: sticky; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 60px;
+      background: rgba(6,9,15,0.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; padding: 8px 16px; border-radius: 8px;
+      letter-spacing: 0.01em; transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-links a.active { color: #fff; background: rgba(0,80,200,0.15); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-phone { font-size: 13px; color: var(--text-muted); }
+    .nav-phone strong { color: var(--accent); }
+    .nav-cta {
+      background: var(--primary);
+      color: #fff; border: none; cursor: pointer;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 13px; font-weight: 600;
+      padding: 10px 22px; border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+    /* ======= HERO ======= */
+    .hero {
+      min-height: 88vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 80px 60px;
+      position: relative; overflow: hidden;
+      gap: 60px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 60%; height: 100%;
+      background: radial-gradient(ellipse at 80% 40%, rgba(0,80,200,0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,200,255,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      color: var(--accent); text-transform: uppercase;
+      border: 1px solid rgba(0,200,255,0.25);
+      background: rgba(0,200,255,0.06);
+      padding: 5px 14px; border-radius: 20px;
+      margin-bottom: 24px; animation: fadeUp 0.6s ease both;
+    }
+    .hero-label::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green); animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 700; line-height: 1.0;
+      letter-spacing: -1px; color: #fff;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero h1 .hi { color: var(--accent); }
+    .hero h1 .orange { color: var(--accent2); }
+    .hero p {
+      font-size: 16px; color: var(--text-muted);
+      max-width: 460px; line-height: 1.8;
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--primary); color: #fff; border: none;
+      cursor: pointer; font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px; font-weight: 600;
+      padding: 13px 28px; border-radius: 9px;
+      transition: background 0.2s, transform 0.15s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border2); cursor: pointer;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px; font-weight: 500;
+      padding: 13px 28px; border-radius: 9px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: rgba(0,80,200,0.5); background: rgba(0,80,200,0.07); }
+
+    /* Hero Visual */
+    .hero-visual {
+      position: relative; display: flex; align-items: center; justify-content: center;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-card-main {
+      background: var(--dark3);
+      border: 1px solid var(--border2);
+      border-radius: 20px; padding: 32px;
+      width: 100%; max-width: 380px;
+      position: relative;
+    }
+    .hero-card-main::before {
+      content: ''; position: absolute; inset: -1px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(0,80,200,0.4), transparent 60%);
+      z-index: -1;
+    }
+    .hc-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .hc-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px;
+    }
+    .hc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .hc-stat {
+      background: var(--dark4); border-radius: 10px; padding: 14px;
+      border: 1px solid var(--border);
+    }
+    .hc-stat-val {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 24px; font-weight: 700; color: var(--accent);
+    }
+    .hc-stat-lbl { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+    .hc-bar { height: 4px; border-radius: 4px; background: var(--border); margin-bottom: 8px; overflow: hidden; }
+    .hc-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+    .hc-service-list { display: flex; flex-direction: column; gap: 6px; }
+    .hc-svc {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: var(--text-muted); padding: 8px 10px;
+      background: var(--dark4); border-radius: 8px; border: 1px solid var(--border);
+    }
+    .hc-svc-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Float badge */
+    .badge-float {
+      position: absolute; top: -16px; right: -16px;
+      background: var(--green); color: #000;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 5px 12px; border-radius: 20px;
+      text-transform: uppercase;
+      animation: float 3s ease-in-out infinite;
+    }
+    .badge-float2 {
+      position: absolute; bottom: -14px; left: -14px;
+      background: var(--dark4); color: var(--accent);
+      border: 1px solid rgba(0,200,255,0.3);
+      font-size: 11px; font-weight: 600;
+      padding: 8px 14px; border-radius: 12px;
+      display: flex; align-items: center; gap: 6px;
+      animation: float 3.5s ease-in-out 0.5s infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ======= MARQUEE / CLIENTS ======= */
+    .marquee-wrap {
+      background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 18px 0; overflow: hidden; white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex; gap: 48px;
+      animation: marquee 20s linear infinite;
+    }
+    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--text-dim); text-transform: uppercase;
+    }
+    .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--primary); }
+
+    /* ======= STATS BAR ======= */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-item {
+      padding: 32px 40px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 42px; font-weight: 700;
+      color: var(--primary-light); display: block; margin-bottom: 4px;
+      line-height: 1;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); }
+
+    /* ======= SECTIONS ======= */
+    .section { padding: 88px 60px; }
+    .section-inner { max-width: 1160px; margin: 0 auto; }
+    .tag {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); background: rgba(0,200,255,0.08);
+      border: 1px solid rgba(0,200,255,0.2);
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(28px, 4vw, 44px); font-weight: 700;
+      letter-spacing: -0.5px; color: #fff; margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: 15px; color: var(--text-muted);
+      max-width: 500px; line-height: 1.75; margin-bottom: 52px;
+    }
+
+    /* ======= SERVICES ======= */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+    .service-card {
+      background: var(--dark3); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden; cursor: default;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .service-card:hover {
+      border-color: var(--border2); transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,80,200,0.15);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .svc-icon {
+      width: 46px; height: 46px;
+      background: rgba(0,80,200,0.12);
+      border: 1px solid rgba(0,80,200,0.25);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .svc-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; }
+    .service-card h3 {
+      font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 600;
+      color: #fff; margin-bottom: 10px;
+    }
+    .service-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .svc-price {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      color: var(--green); background: rgba(0,224,135,0.08);
+      border: 1px solid rgba(0,224,135,0.2);
+      padding: 4px 10px; border-radius: 6px; margin-top: 14px;
+    }
+
+    /* ======= PRICING ======= */
+    .pricing-bg { background: var(--dark2); }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .price-card {
+      background: var(--dark3); border: 1px solid var(--border);
+      border-radius: 14px; padding: 26px; transition: border-color 0.2s;
+      position: relative;
+    }
+    .price-card:hover { border-color: var(--border2); }
+    .price-card.featured {
+      border-color: var(--primary);
+      background: rgba(0,80,200,0.07);
+    }
+    .featured-badge {
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+      background: var(--primary); color: #fff;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 3px 12px; border-radius: 20px; text-transform: uppercase;
+    }
+    .price-type { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .price-amt { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; color: #fff; }
+    .price-note { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+
+    /* ======= WHY ======= */
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .why-card {
+      background: var(--dark3); border: 1px solid var(--border);
+      border-radius: 14px; padding: 26px; position: relative; overflow: hidden;
+    }
+    .why-card::after {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(0,80,200,0.12) 0%, transparent 70%);
+    }
+    .why-num {
+      font-family: 'Rajdhani', sans-serif; font-size: 44px; font-weight: 700;
+      color: rgba(0,80,200,0.12); margin-bottom: 14px; line-height: 1;
+    }
+    .why-card h4 {
+      font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 600;
+      color: #fff; margin-bottom: 8px;
+    }
+    .why-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    /* ======= PRODUCTS / SOLUTIONS ======= */
+    .solutions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .sol-card {
+      border-radius: 18px; overflow: hidden; border: 1px solid var(--border);
+      background: var(--dark3); transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .sol-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,80,200,0.15); }
+    .sol-card-header {
+      padding: 36px 28px 28px;
+      background: linear-gradient(135deg, var(--dark4) 0%, rgba(0,80,200,0.12) 100%);
+      position: relative;
+    }
+    .sol-card-header svg { width: 40px; height: 40px; stroke: var(--accent); fill: none; stroke-width: 1.3; stroke-linecap: round; margin-bottom: 16px; display: block; }
+    .sol-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: #fff; }
+    .sol-card-body { padding: 24px 28px; }
+    .sol-card-body p { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 18px; }
+    .sol-link { font-size: 12px; font-weight: 600; color: var(--primary-light); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.03em; }
+    .sol-link:hover { color: var(--accent); }
+
+    /* ======= CONTACT ======= */
+    .contact-section { background: var(--dark2); }
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .contact-info h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 38px; font-weight: 700; letter-spacing: -0.5px; color: #fff; margin-bottom: 14px;
+    }
+    .contact-info > p { font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 32px; }
+    .contact-items { display: flex; flex-direction: column; gap: 14px; }
+    .contact-item { display: flex; align-items: center; gap: 14px; }
+    .contact-dot {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(0,80,200,0.12); border: 1px solid rgba(0,80,200,0.25);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-dot svg { width: 16px; height: 16px; stroke: var(--accent); stroke-width: 1.8; fill: none; stroke-linecap: round; }
+    .contact-item-text p { font-size: 10px; color: var(--text-dim); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.07em; }
+    .contact-item-text a { font-size: 14px; color: var(--text); text-decoration: none; }
+    .contact-item-text a:hover { color: var(--accent); }
+
+    .contact-form {
+      background: var(--dark3); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px;
+    }
+    .contact-form h3 { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 24px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: var(--dark2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Nunito Sans', sans-serif; font-size: 14px;
+      padding: 10px 14px; outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: rgba(0,80,200,0.4);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group select option { background: var(--dark2); }
+    .form-submit {
+      width: 100%; background: var(--primary); color: #fff; border: none;
+      cursor: pointer; font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px; font-weight: 600; padding: 13px; border-radius: 10px;
+      margin-top: 8px; transition: background 0.2s;
+    }
+    .form-submit:hover { background: var(--primary-light); }
+
+    /* ======= FOOTER ======= */
+    footer {
+      background: var(--dark2); border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    footer p { font-size: 12px; color: var(--text-dim); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-dim); text-decoration: none; }
+    .footer-links a:hover { color: var(--text-muted); }
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width: 900px) {
+      .topbar { display: none; }
+      nav { padding: 14px 20px; }
+      .nav-links, .nav-phone { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 80px 24px 60px; gap: 40px; }
+      .hero-visual { order: -1; }
+      .section { padding: 60px 24px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
+      .stat-item:nth-child(4) { border-right: none; border-top: 1px solid var(--border); }
+      .solutions-grid { grid-template-columns: 1fr; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.9 13.5 19.79 19.79 0 0 1 1.88 4.88 2 2 0 0 1 3.86 2.7h3a2 2 0 0 1 2 1.72c.13 1.05.39 2.08.76 3.07a2 2 0 0 1-.45 2.11L8.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.99.37 2.02.63 3.07.76A2 2 0 0 1 22 17z"/></svg>
+      +91-9199690572
+    </span>
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      info@macrodex.com
+    </span>
+  </div>
+  <div>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Careers</a>
+    <a href="#">Support</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <!-- LOGO SVG -->
+  <svg class="logo-svg" viewBox="0 0 200 44" xmlns="https://www.w3.org/2000/svg">
+    <!-- Icon -->
+    <rect x="0" y="4" width="36" height="36" rx="8" fill="#0050C8"/>
+    <path d="M8 28 L14 14 L20 24 L26 14 L32 28" stroke="#00C8FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="20" cy="10" r="2.5" fill="#FF6B35"/>
+    <!-- Wordmark -->
+    <text x="46" y="30" font-family="Rajdhani, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">MACRO</text>
+    <text x="118" y="30" font-family="Rajdhani, sans-serif" font-size="22" font-weight="700" fill="#00C8FF" letter-spacing="-0.5">DEX</text>
+    <!-- Tagline -->
+    <text x="46" y="40" font-family="Nunito Sans, sans-serif" font-size="7" font-weight="500" fill="#6B7A99" letter-spacing="1.5">IT SOLUTIONS PVT. LTD.</text>
+  </svg>
+
+  <div class="nav-links">
+    <a href="#services" class="active">Services</a>
+    <a href="#solutions">Solutions</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">Why Us</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-phone"><strong>24/7 Support</strong></span>
+    <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Quote</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Trusted IT Partner Since 2015</div>
+    <h1>Build your business<br>with <span class="hi">smart</span><br><span class="orange">digital</span> solutions</h1>
+    <p>MACRODEX empowers startups and enterprises with websites, mobile apps, software, and digital marketing — delivered on time and within budget.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Start a Project
+      </button>
+      <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">View Services</button>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card-main">
+      <div class="badge-float">✓ Live & Growing</div>
+      <div class="hc-tag">Project Overview</div>
+      <div class="hc-title">E-commerce Platform</div>
+      <div class="hc-stats">
+        <div class="hc-stat">
+          <div class="hc-stat-val">500+</div>
+          <div class="hc-stat-lbl">Projects Done</div>
+        </div>
+        <div class="hc-stat">
+          <div class="hc-stat-val">98%</div>
+          <div class="hc-stat-lbl">Client Satisfaction</div>
+        </div>
+      </div>
+      <div class="hc-bar"><div class="hc-bar-fill" style="width:85%"></div></div>
+      <div style="font-size:10px;color:var(--text-muted);margin-bottom:14px;">Project progress — 85% complete</div>
+      <div class="hc-service-list">
+        <div class="hc-svc"><div class="hc-svc-dot" style="background:#00E087"></div>Website Development</div>
+        <div class="hc-svc"><div class="hc-svc-dot" style="background:#00C8FF"></div>Mobile App (Android + iOS)</div>
+        <div class="hc-svc"><div class="hc-svc-dot" style="background:#0050C8"></div>Digital Marketing Active</div>
+      </div>
+    </div>
+    <div class="badge-float2">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      On-time delivery
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Website Development</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Mobile Apps</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Custom Software</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Digital Marketing</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Cloud Solutions</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>ERP / CRM</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>SEO & Branding</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>IT Infrastructure</span>
+    <!-- Duplicate for infinite loop -->
+    <span class="marquee-item"><span class="marquee-dot"></span>Website Development</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Mobile Apps</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Custom Software</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Digital Marketing</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Cloud Solutions</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>ERP / CRM</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>SEO & Branding</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>IT Infrastructure</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><span class="stat-num">500+</span><span class="stat-label">Projects Delivered</span></div>
+  <div class="stat-item"><span class="stat-num">8+</span><span class="stat-label">Years of Experience</span></div>
+  <div class="stat-item"><span class="stat-num">24/7</span><span class="stat-label">Technical Support</span></div>
+  <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">On-time Delivery</span></div>
+</div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-inner">
+    <span class="tag">What We Do</span>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">End-to-end digital solutions for every business size and need.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Website Development</h3>
+        <p>Business sites, e-commerce stores, school/college portals, and portfolio websites — fully responsive & modern.</p>
+        <span class="svc-price">From ₹15,000</span>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        </div>
+        <h3>Mobile App Development</h3>
+        <p>Android & iOS apps — booking apps, e-commerce, custom business apps built with latest technologies.</p>
+        <span class="svc-price">From ₹1,00,000</span>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        </div>
+        <h3>Software Solutions</h3>
+        <p>Inventory management, billing, ERP, CRM, and fully customized enterprise software solutions.</p>
+        <span class="svc-price">From ₹50,000</span>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        </div>
+        <h3>Digital Marketing</h3>
+        <p>SEO, social media marketing, paid ads (Google/Meta), branding, and logo design to grow your online presence.</p>
+        <span class="svc-price">From ₹10,000/month</span>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>IT Infrastructure & Support</h3>
+        <p>Domain & hosting, cloud services, surveillance systems, and ongoing technical maintenance & support.</p>
+        <span class="svc-price">Custom Pricing</span>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>DTH / LMS Encryption</h3>
+        <p>Secure and robust DTH LMS encryption solutions for educational institutions and content broadcasters.</p>
+        <span class="svc-price">Contact for Pricing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="section" id="solutions" style="background:var(--dark2);">
+  <div class="section-inner">
+    <span class="tag">Key Products</span>
+    <h2 class="section-title">Our Solutions</h2>
+    <p class="section-sub">Specialized platforms built for modern businesses and institutions.</p>
+    <div class="solutions-grid">
+      <div class="sol-card">
+        <div class="sol-card-header">
+          <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <h3>DTH LMS Software</h3>
+        </div>
+        <div class="sol-card-body">
+          <p>Powerful Learning Management System with DTH encryption for educational institutions. Secure content delivery, online exams, and student tracking.</p>
+          <a href="#contact" class="sol-link">Know More →</a>
+        </div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-card-header">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <h3>Custom Web Development</h3>
+        </div>
+        <div class="sol-card-body">
+          <p>From single-page brochure sites to full-scale e-commerce platforms — built with modern frameworks, optimized for speed and conversion.</p>
+          <a href="#contact" class="sol-link">Know More →</a>
+        </div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-card-header">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <h3>Cloud & Surveillance</h3>
+        </div>
+        <div class="sol-card-body">
+          <p>Secure cloud infrastructure, data backup, and CCTV surveillance solutions for offices, schools, and commercial establishments.</p>
+          <a href="#contact" class="sol-link">Know More →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-bg" id="pricing">
+  <div class="section-inner">
+    <span class="tag">Transparent Pricing</span>
+    <h2 class="section-title">Estimated Costs</h2>
+    <p class="section-sub">Affordable pricing for every business size — no hidden charges, ever.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-type">Business Website</div>
+        <div class="price-amt">₹15K – ₹50K</div>
+      </div>
+      <div class="price-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="price-type">E-commerce Website</div>
+        <div class="price-amt">₹50K – ₹2L</div>
+      </div>
+      <div class="price-card">
+        <div class="price-type">Mobile App</div>
+        <div class="price-amt">₹1L – ₹10L</div>
+      </div>
+      <div class="price-card">
+        <div class="price-type">Custom Software</div>
+        <div class="price-amt">₹50K – ₹5L</div>
+      </div>
+      <div class="price-card">
+        <div class="price-type">Digital Marketing</div>
+        <div class="price-amt">₹10K – ₹50K</div>
+        <div class="price-note">per month</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <span class="tag">Why Us</span>
+    <h2 class="section-title">Why Choose MACRODEX?</h2>
+    <p class="section-sub">We deliver more than just code — we deliver measurable results.</p>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-num">01</div><h4>Affordable & Transparent</h4><p>No hidden charges. Clear, upfront pricing for every project from day one.</p></div>
+      <div class="why-card"><div class="why-num">02</div><h4>Customized Solutions</h4><p>Every solution is built specifically for your unique business requirements.</p></div>
+      <div class="why-card"><div class="why-num">03</div><h4>On-Time Delivery</h4><p>We respect your deadlines and always deliver projects on schedule.</p></div>
+      <div class="why-card"><div class="why-num">04</div><h4>24×7 Technical Support</h4><p>Round-the-clock technical assistance, whenever you need it.</p></div>
+      <div class="why-card"><div class="why-num">05</div><h4>Skilled & Experienced Team</h4><p>A team of experienced developers, designers, and digital strategists.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="section-inner">
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <span class="tag">Get in Touch</span>
+        <h2>Ready to start<br>your project?</h2>
+        <p>Tell us about your idea and we'll get back to you within 24 hours with a free consultation and quote.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-dot">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.61 19a19.5 19.5 0 0 1-6.06-6.06A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.13 1.05.39 2.08.76 3.07a2 2 0 0 1-.45 2.11L8.09 10.2a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.99.37 2.02.63 3.07.76A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="contact-item-text"><p>Phone</p><a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-dot">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-item-text"><p>Email</p><a href="mailto:info@macrodex.com">info@macrodex.com</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-dot">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            </div>
+            <div class="contact-item-text"><p>Website</p><a href="https://www.macrodex.com" target="_blank">www.macrodex.com</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>Send us a message</h3>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Rahul Sharma" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="rahul@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select>
+            <option value="">Select a service</option>
+            <option>Website Development</option>
+            <option>Mobile App Development</option>
+            <option>Software Solutions</option>
+            <option>Digital Marketing</option>
+            <option>IT Infrastructure</option>
+            <option>DTH / LMS</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your project..."></textarea>
+        </div>
+        <button class="form-submit">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <!-- Footer Logo SVG -->
+  <svg width="130" height="28" viewBox="0 0 160 28" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="2" width="24" height="24" rx="5" fill="#0050C8"/>
+    <path d="M5 18 L9 9 L13 16 L17 9 L21 18" stroke="#00C8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="30" y="20" font-family="Rajdhani, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">MACRO</text>
+    <text x="84" y="20" font-family="Rajdhani, sans-serif" font-size="16" font-weight="700" fill="#00C8FF">DEX</text>
+  </svg>
+  <p>© 2025 MACRODEX – IT Solutions Pvt. Ltd. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
